@@ -98,7 +98,7 @@ export const FloatingWhatsApp: React.FC = () => {
                   <div className="flex items-center gap-1">
                     <p className="font-bold text-xs text-[#1A1A1A]">Faiz Baig</p>
                     <span className="text-[8px] bg-[#D4AF37]/20 text-[#8B6508] font-bold px-1.5 py-0.2 rounded-full">
-                      Promoter
+                      Int'l Promoter & Mgmt
                     </span>
                   </div>
                   <p className="text-[10px] font-mono text-[#8B6508] flex items-center gap-1">
@@ -114,7 +114,7 @@ export const FloatingWhatsApp: React.FC = () => {
           </div>
 
           <a
-            href="mailto:info@tinseltownentertainment.com?subject=Bollywood%20Milestones%20Tour%20Inquiry"
+            href="mailto:info@tinseltownentertainment.com?cc=faiz@baiginsurance.com&subject=Bollywood%20Milestones%20Tour%20Inquiry"
             className="block text-center text-[10px] text-[#8B6508] hover:underline font-semibold"
           >
             Or Email: info@tinseltownentertainment.com

@@ -6,6 +6,8 @@ import {
   Instagram,
   Youtube,
   Radio,
+  Facebook,
+  Film,
   Crown,
   Disc,
   Play,
@@ -14,15 +16,20 @@ import {
   Volume2,
   ExternalLink,
   Award,
+  BookOpen,
+  Quote,
+  CheckCircle2,
+  ChevronRight,
 } from 'lucide-react';
 
-import snehaaImg from '../assets/images/snehaa_bhattacharya_1787694004960.jpg';
-import rramImg from '../assets/images/rram_tasildar_1787694021586.jpg';
+import snehaaImg from '../assets/images/sneha02110.jpg';
+import rramImg from '../assets/images/Rram01002.png';
 import bijanImg from '../assets/images/bijan_drummer_1787694035648.jpg';
 import somImg from '../assets/images/som_guitarist_1787694048151.jpg';
 import arijitImg from '../assets/images/arijit_bassist_1787694061499.jpg';
 import prosenjitImg from '../assets/images/prosenjit_keys_1787694075600.jpg';
 import swarnavaImg from '../assets/images/swarnava_percuss_1787694089318.jpg';
+import { ArtistBioModal, ARTISTS_BIO_DATA } from './ArtistBioModal';
 
 interface LeadArtist {
   id: string;
@@ -34,9 +41,11 @@ interface LeadArtist {
   image: string;
   highlights: string[];
   social: {
-    instagram: string;
-    youtube: string;
+    instagram?: string;
+    youtube?: string;
     spotify: string;
+    facebook?: string;
+    imdb?: string;
   };
 }
 
@@ -55,43 +64,48 @@ interface BandMusician {
 
 const LEAD_ARTISTS: LeadArtist[] = [
   {
-    id: 'snehaa',
-    name: 'Snehaa Bhattacharya',
-    role: 'Bollywood Playback Singer',
-    title: 'Sa Re Ga Ma Finalist | Live Concert Performer',
-    badges: ['Sa Re Ga Ma Finalist', 'Playback Singer', 'USA & Canada Tour Lead'],
+    id: 'rram',
+    name: 'Rram Tasildar',
+    role: 'Music Director, Bollywood Artist & Playback Singer',
+    title: 'Ramshankar Tasildar | Mumbai, Maharashtra',
+    badges: ['Music Director', 'Bollywood Artist', 'Playback Singer'],
     description:
-      'Snehaa Bhattacharya is a talented Bollywood playback singer known for her soulful voice and energetic live performances. She has performed on prestigious music stages and is recognized as a Sa Re Ga Ma finalist. She brings Bollywood classics and modern hits to audiences across the USA and Canada.',
-    image: snehaaImg,
+      'Ramshankar Tasildar, professionally credited as Rram Tasildar, is an established Indian music director, Bollywood artist, and playback singer based in Mumbai. Known for hit releases "Muntazir", "Ishq", "Dil", and the acclaimed Bengali track "Mon Bechara", he brings decades of studio mastery and electrifying stage presence.',
+    image: rramImg,
     highlights: [
-      'Soulful Bollywood Romantic Melodies & 90s Evergreen Duets',
-      'High-Energy Modern Dance & Festival Anthems',
-      'Nationally Acclaimed Sa Re Ga Ma Finalist',
+      'Hit Audio Tracks: "Muntazir", "Ishq" & "Dil"',
+      'Acclaimed Regional Romantic Hit "Mon Bechara" (Joy Sarkar & Rajiv Dutta)',
+      'Creative Duo Collaboration alongside Bhavna Chawla ("Rram & Bhavna")',
+      'Established Music Director & Multi-Decade Live Performer',
     ],
     social: {
-      instagram: 'https://www.instagram.com/tinseltown_us/',
+      spotify: 'https://open.spotify.com/artist/5H1hbPnT2nRUi0HB6JKR7P',
       youtube: 'https://youtube.com',
-      spotify: 'https://spotify.com',
+      facebook: 'https://www.facebook.com/rrambhavna/',
+      imdb: 'https://www.imdb.com/name/nm15746914/',
+      instagram: 'https://www.instagram.com/tinseltown_us/',
     },
   },
   {
-    id: 'rram',
-    name: 'Rram Tasildar',
-    role: 'Bollywood Singer & Global Performer',
-    title: 'T-Series Artist | Times Music Artist',
-    badges: ['T-Series Artist', 'Times Music Artist', 'Global Live Performer'],
+    id: 'snehaa',
+    name: 'Sneha Bhattacharya',
+    role: 'Bollywood Playback Singer & Live Performer',
+    title: 'Sa Re Ga Ma Pa 2023 (4th Runner-Up) | Kolkata, West Bengal',
+    badges: ['Sa Re Ga Ma Pa 2023 Finalist', 'Zee Music Debutant', 'Kolkata, West Bengal'],
     description:
-      'Rram Tasildar is an international Bollywood singer who has released music with T-Series and Times Music. He is known for powerful live vocals, romantic Bollywood songs, and high-energy stage performances worldwide.',
-    image: rramImg,
+      'Sneha Bhattacharya is a versatile Indian playback singer, dynamic live performer, and independent musical artist. Finalist on Zee TV’s Sa Re Ga Ma Pa 2023 (4th runner-up) from Kolkata, she bridges traditional Indian sounds, devotional bhajans, Bengali folk, and modern Bollywood pop.',
+    image: snehaaImg,
     highlights: [
-      'Official Releases on T-Series & Times Music',
-      'Powerhouse Vocal Range & Stadium Rock Bollywood',
-      'Dynamic Global Tour Headline Performer',
+      'Zee TV Sa Re Ga Ma Pa 2023 Finalist & 4th Runner-Up',
+      'Commercial Track "Mangalvaar" (Zee Music Company)',
+      'TV Serial Title Track "Kyunki… Saas Maa Bahu Beti Hoti Hai"',
+      'Hit Tracks: "Akela Rasta", "Eso Bondhu", "Thakur Jamai" & Rabindra Sangeet Mashups',
     ],
     social: {
-      instagram: 'https://www.instagram.com/tinseltown_us/',
-      youtube: 'https://youtube.com',
-      spotify: 'https://spotify.com',
+      instagram: 'https://www.instagram.com/sneha_bhattacharya_official/',
+      youtube: 'https://www.youtube.com/channel/UCEDUCoV3AB_cz1x9AMRr9DQ',
+      spotify: 'https://open.spotify.com/artist/4R3pfd3q5R5aMZcobk8InD',
+      facebook: 'https://www.facebook.com/snehaaBhattacharyaofficial/',
     },
   },
 ];
@@ -169,7 +183,15 @@ interface FeaturedArtistsSectionProps {
 }
 
 export const FeaturedArtistsSection: React.FC<FeaturedArtistsSectionProps> = ({ onOpenBooking }) => {
-  const [activeLead, setActiveLead] = useState<string>('snehaa');
+  const [activeLead, setActiveLead] = useState<string>('rram');
+  const [isBioModalOpen, setIsBioModalOpen] = useState<boolean>(false);
+  const [bioModalArtist, setBioModalArtist] = useState<'rram' | 'snehaa'>('rram');
+  const [inlineBioTab, setInlineBioTab] = useState<'rram' | 'snehaa'>('rram');
+
+  const handleOpenBio = (artistId: 'snehaa' | 'rram') => {
+    setBioModalArtist(artistId);
+    setIsBioModalOpen(true);
+  };
 
   return (
     <section
@@ -245,7 +267,7 @@ export const FeaturedArtistsSection: React.FC<FeaturedArtistsSectionProps> = ({ 
                           src={artist.image}
                           alt={artist.name}
                           referrerPolicy="no-referrer"
-                          className="w-full h-full object-cover rounded-full transition-transform duration-700 group-hover:scale-105"
+                          className="w-full h-full object-cover object-[center_20%] rounded-full transition-transform duration-700 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 rounded-full ring-1 ring-white/50" />
                       </div>
@@ -293,26 +315,30 @@ export const FeaturedArtistsSection: React.FC<FeaturedArtistsSectionProps> = ({ 
                       </div>
 
                       {/* Social Links & Action Button */}
-                      <div className="pt-3 border-t border-[#D4AF37]/20 flex flex-wrap items-center justify-center sm:justify-between gap-3">
+                      <div className="pt-3 border-t border-[#D4AF37]/20 flex flex-wrap items-center justify-between gap-2.5">
                         <div className="flex items-center gap-2">
-                          <a
-                            href={artist.social.instagram}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 rounded-full bg-[#FFFDF8] hover:bg-pink-50 border border-[#D4AF37]/40 hover:border-pink-400 text-[#8B6508] hover:text-pink-600 transition-all hover:scale-110 shadow-xs"
-                            title={`Follow ${artist.name} on Instagram`}
-                          >
-                            <Instagram className="w-3.5 h-3.5" />
-                          </a>
-                          <a
-                            href={artist.social.youtube}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 rounded-full bg-[#FFFDF8] hover:bg-red-50 border border-[#D4AF37]/40 hover:border-red-400 text-[#8B6508] hover:text-red-600 transition-all hover:scale-110 shadow-xs"
-                            title={`Watch ${artist.name} on YouTube`}
-                          >
-                            <Youtube className="w-3.5 h-3.5" />
-                          </a>
+                          {artist.social.instagram && (
+                            <a
+                              href={artist.social.instagram}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-2 rounded-full bg-[#FFFDF8] hover:bg-pink-50 border border-[#D4AF37]/40 hover:border-pink-400 text-[#8B6508] hover:text-pink-600 transition-all hover:scale-110 shadow-xs"
+                              title={`Follow ${artist.name} on Instagram`}
+                            >
+                              <Instagram className="w-3.5 h-3.5" />
+                            </a>
+                          )}
+                          {artist.social.youtube && (
+                            <a
+                              href={artist.social.youtube}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-2 rounded-full bg-[#FFFDF8] hover:bg-red-50 border border-[#D4AF37]/40 hover:border-red-400 text-[#8B6508] hover:text-red-600 transition-all hover:scale-110 shadow-xs"
+                              title={`Watch ${artist.name} on YouTube`}
+                            >
+                              <Youtube className="w-3.5 h-3.5" />
+                            </a>
+                          )}
                           <a
                             href={artist.social.spotify}
                             target="_blank"
@@ -322,22 +348,355 @@ export const FeaturedArtistsSection: React.FC<FeaturedArtistsSectionProps> = ({ 
                           >
                             <Radio className="w-3.5 h-3.5" />
                           </a>
+                          {artist.social.facebook && (
+                            <a
+                              href={artist.social.facebook}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-2 rounded-full bg-[#FFFDF8] hover:bg-blue-50 border border-[#D4AF37]/40 hover:border-blue-400 text-[#8B6508] hover:text-blue-600 transition-all hover:scale-110 shadow-xs"
+                              title={`Follow ${artist.name} on Facebook`}
+                            >
+                              <Facebook className="w-3.5 h-3.5" />
+                            </a>
+                          )}
+                          {artist.social.imdb && (
+                            <a
+                              href={artist.social.imdb}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-2 rounded-full bg-[#FFFDF8] hover:bg-amber-50 border border-[#D4AF37]/40 hover:border-amber-400 text-[#8B6508] hover:text-amber-800 transition-all hover:scale-110 shadow-xs"
+                              title={`${artist.name} on IMDb`}
+                            >
+                              <Film className="w-3.5 h-3.5 text-amber-600" />
+                            </a>
+                          )}
                         </div>
 
-                        {onOpenBooking && (
+                        <div className="flex items-center gap-2">
                           <button
-                            onClick={onOpenBooking}
-                            className="text-[11px] font-bold uppercase tracking-wider text-[#8B6508] hover:text-[#1A1A1A] px-3.5 py-1.5 rounded-full bg-[#FFF9E6] hover:bg-[#FFF3B0] border border-[#D4AF37]/50 transition-all shadow-xs cursor-pointer"
+                            id={`btn-read-bio-${artist.id}`}
+                            onClick={() => handleOpenBio(artist.id as 'snehaa' | 'rram')}
+                            className="text-[11px] font-bold uppercase tracking-wider text-[#1A1A1A] hover:text-[#8B6508] px-3 py-1.5 rounded-full bg-white hover:bg-[#FFF9E6] border border-[#D4AF37]/60 transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
                           >
-                            Book For Live Show →
+                            <BookOpen className="w-3.5 h-3.5 text-[#D4AF37]" />
+                            <span>Read Bio</span>
                           </button>
-                        )}
+
+                          {onOpenBooking && (
+                            <button
+                              onClick={onOpenBooking}
+                              className="text-[11px] font-bold uppercase tracking-wider text-[#8B6508] hover:text-[#1A1A1A] px-3.5 py-1.5 rounded-full bg-[#FFF9E6] hover:bg-[#FFF3B0] border border-[#D4AF37]/50 transition-all shadow-xs cursor-pointer"
+                            >
+                              Book Show →
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               );
             })}
+          </div>
+        </div>
+
+        {/* ========================================================= */}
+        {/* DEDICATED INDIVIDUAL BIOGRAPHIES: SNEHAA & RRAM           */}
+        {/* ========================================================= */}
+        <div id="artist-biographies-spotlight" className="mb-20">
+          <div className="p-6 sm:p-10 rounded-3xl bg-white/95 backdrop-blur-md border-2 border-[#D4AF37]/40 shadow-[0_16px_50px_rgba(212,175,55,0.14)] space-y-8">
+            {/* Header & Biography Tab Switcher */}
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4 pb-6 border-b border-[#D4AF37]/30">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <BookOpen className="w-4 h-4 text-[#D4AF37]" />
+                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.25em] text-[#8B6508]">
+                    Detailed Artist Profiles
+                  </span>
+                </div>
+                <h3
+                  className="text-2xl sm:text-3xl font-bold text-[#1A1A1A] font-serif"
+                  style={{ fontFamily: "'Cormorant Garamond', 'Georgia', serif" }}
+                >
+                  Artist Biographies & Musical Roots
+                </h3>
+                <p className="text-xs text-[#7A6B53] mt-0.5">
+                  Explore Rram Tasildar and Sneha Bhattacharya's classical training, career breakthroughs, and stage journeys.
+                </p>
+              </div>
+
+              {/* Toggle Buttons: Rram vs Sneha */}
+              <div className="flex items-center p-1.5 bg-[#FFF9E6] rounded-2xl border border-[#D4AF37]/50 shadow-inner w-full md:w-auto">
+                <button
+                  id="tab-inline-bio-rram"
+                  onClick={() => setInlineBioTab('rram')}
+                  className={`flex-1 md:flex-initial px-4 sm:px-5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-2 ${
+                    inlineBioTab === 'rram'
+                      ? 'bg-[#1A1A1A] text-[#FFF3B0] shadow-md border border-[#D4AF37]'
+                      : 'text-[#635544] hover:text-[#1A1A1A]'
+                  }`}
+                >
+                  <Crown className="w-3.5 h-3.5 text-[#D4AF37]" />
+                  <span>Rram Tasildar</span>
+                </button>
+                <button
+                  id="tab-inline-bio-snehaa"
+                  onClick={() => setInlineBioTab('snehaa')}
+                  className={`flex-1 md:flex-initial px-4 sm:px-5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-2 ${
+                    inlineBioTab === 'snehaa'
+                      ? 'bg-[#1A1A1A] text-[#FFF3B0] shadow-md border border-[#D4AF37]'
+                      : 'text-[#635544] hover:text-[#1A1A1A]'
+                  }`}
+                >
+                  <Crown className="w-3.5 h-3.5 text-[#D4AF37]" />
+                  <span>Sneha Bhattacharya</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Render Selected Artist's Full Bio */}
+            {(() => {
+              const currentBio = ARTISTS_BIO_DATA[inlineBioTab];
+              return (
+                <div key={currentBio.id} className="space-y-8 animate-fade-in">
+                  {/* Top Intro with Portrait & Quote */}
+                  <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 bg-gradient-to-br from-[#FFFDF8] via-[#FFF9E6]/50 to-[#FFFDF8] p-6 sm:p-8 rounded-2xl border border-[#D4AF37]/40 shadow-xs">
+                    {/* Portrait */}
+                    <div className="relative shrink-0">
+                      <div className="relative w-40 h-40 sm:w-48 sm:h-48 rounded-full p-1.5 bg-gradient-to-tr from-[#B38728] via-[#FBF5B7] to-[#D4AF37] shadow-[0_0_30px_rgba(212,175,55,0.4)]">
+                        <img
+                          src={currentBio.image}
+                          alt={currentBio.name}
+                          referrerPolicy="no-referrer"
+                          className="w-full h-full object-cover object-[center_20%] rounded-full"
+                        />
+                      </div>
+                      <div className="absolute -bottom-2 right-4 p-2.5 rounded-full bg-[#1A1A1A] text-[#FFF3B0] border border-[#D4AF37] shadow-lg">
+                        <Mic2 className="w-4 h-4 text-[#D4AF37]" />
+                      </div>
+                    </div>
+
+                    {/* Bio Headline & Overview */}
+                    <div className="flex-1 text-center lg:text-left space-y-3">
+                      <div className="flex items-center justify-center lg:justify-start gap-2 flex-wrap">
+                        <span className="px-3 py-1 rounded-full bg-[#FFF9E6] border border-[#D4AF37]/60 text-[11px] font-bold text-[#8B6508] uppercase tracking-wider">
+                          {currentBio.role}
+                        </span>
+                        <span className="px-3 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-[11px] font-bold text-emerald-800">
+                          USA & Canada Tour 2027
+                        </span>
+                      </div>
+
+                      <h4
+                        className="text-3xl sm:text-4xl font-bold text-[#1A1A1A] font-serif tracking-tight"
+                        style={{ fontFamily: "'Cormorant Garamond', 'Georgia', serif" }}
+                      >
+                        {currentBio.name}
+                      </h4>
+
+                      <p className="text-xs sm:text-sm font-semibold text-[#8B6508]">
+                        {currentBio.tagline}
+                      </p>
+
+                      <p className="text-xs sm:text-sm text-[#554530] leading-relaxed">
+                        {currentBio.overview}
+                      </p>
+
+                      {/* Artist Quote */}
+                      <div className="p-3.5 rounded-xl bg-white border border-[#D4AF37]/30 flex items-start gap-3 text-left">
+                        <Quote className="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5 rotate-180" />
+                        <p className="text-xs italic text-[#635544] leading-relaxed font-medium">
+                          "{currentBio.quote}"
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 3 Pillars of Biography */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    {/* Pillar 1 */}
+                    <div className="p-5 rounded-2xl bg-[#FFFDF8] border border-[#D4AF37]/40 shadow-xs space-y-2">
+                      <div className="w-8 h-8 rounded-lg bg-[#FFF9E6] border border-[#D4AF37]/50 flex items-center justify-center text-[#8B6508]">
+                        <Music2 className="w-4 h-4" />
+                      </div>
+                      <h5 className="font-bold text-sm text-[#1A1A1A]">
+                        Musical Roots & Training
+                      </h5>
+                      <p className="text-xs text-[#635544] leading-relaxed">
+                        {currentBio.earlyLifeAndTraining}
+                      </p>
+                    </div>
+
+                    {/* Pillar 2 */}
+                    <div className="p-5 rounded-2xl bg-[#FFFDF8] border border-[#D4AF37]/40 shadow-xs space-y-2">
+                      <div className="w-8 h-8 rounded-lg bg-[#FFF9E6] border border-[#D4AF37]/50 flex items-center justify-center text-[#8B6508]">
+                        <Award className="w-4 h-4" />
+                      </div>
+                      <h5 className="font-bold text-sm text-[#1A1A1A]">
+                        Breakthrough & Releases
+                      </h5>
+                      <p className="text-xs text-[#635544] leading-relaxed">
+                        {currentBio.breakthroughAndCareer}
+                      </p>
+                    </div>
+
+                    {/* Pillar 3 */}
+                    <div className="p-5 rounded-2xl bg-[#FFFDF8] border border-[#D4AF37]/40 shadow-xs space-y-2">
+                      <div className="w-8 h-8 rounded-lg bg-[#FFF9E6] border border-[#D4AF37]/50 flex items-center justify-center text-[#8B6508]">
+                        <Sparkles className="w-4 h-4" />
+                      </div>
+                      <h5 className="font-bold text-sm text-[#1A1A1A]">
+                        Stage Presence & Energy
+                      </h5>
+                      <p className="text-xs text-[#635544] leading-relaxed">
+                        {currentBio.stagePresenceAndGenre}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Milestones & Vocal Style */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2">
+                    {/* Milestones */}
+                    <div className="p-5 sm:p-6 rounded-2xl bg-white border border-[#D4AF37]/35 space-y-3">
+                      <div className="flex items-center gap-2">
+                        <Award className="w-4 h-4 text-[#D4AF37]" />
+                        <h5 className="font-bold text-sm uppercase tracking-wider text-[#1A1A1A]">
+                          Career Milestones & Accolades
+                        </h5>
+                      </div>
+                      <div className="space-y-2">
+                        {currentBio.milestones.map((m, idx) => (
+                          <div key={idx} className="flex items-start gap-2.5 text-xs text-[#3D3325]">
+                            <CheckCircle2 className="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5" />
+                            <span>{m}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Vocal Style & Signature Songs */}
+                    <div className="p-5 sm:p-6 rounded-2xl bg-white border border-[#D4AF37]/35 space-y-4">
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <Disc className="w-4 h-4 text-[#D4AF37]" />
+                          <h5 className="font-bold text-sm uppercase tracking-wider text-[#1A1A1A]">
+                            Vocal Style & Artistry
+                          </h5>
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {currentBio.vocalStyle.map((v, idx) => (
+                            <span
+                              key={idx}
+                              className="text-[11px] font-medium px-2.5 py-1 rounded-md bg-[#FFF9E6] border border-[#D4AF37]/40 text-[#8B6508]"
+                            >
+                              {v}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="pt-2 border-t border-[#D4AF37]/20">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Music2 className="w-4 h-4 text-[#D4AF37]" />
+                          <h5 className="font-bold text-sm uppercase tracking-wider text-[#1A1A1A]">
+                            Signature Repertoire
+                          </h5>
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {currentBio.signatureRepertoire.map((song, idx) => (
+                            <span
+                              key={idx}
+                              className="text-[11px] font-medium px-2.5 py-1 rounded-md bg-[#FFFDF8] border border-stone-200 text-[#4A3F2C]"
+                            >
+                              ♪ {song}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bio Actions Footer */}
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-[#D4AF37]/25">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-xs font-semibold text-[#8B6508]">Connect with {currentBio.name}:</span>
+                      {currentBio.social.instagram && (
+                        <a
+                          href={currentBio.social.instagram}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 rounded-full bg-white hover:bg-pink-50 border border-[#D4AF37]/40 text-[#8B6508] hover:text-pink-600 transition-all"
+                          title="Instagram"
+                        >
+                          <Instagram className="w-3.5 h-3.5" />
+                        </a>
+                      )}
+                      {currentBio.social.youtube && (
+                        <a
+                          href={currentBio.social.youtube}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 rounded-full bg-white hover:bg-red-50 border border-[#D4AF37]/40 text-[#8B6508] hover:text-red-600 transition-all"
+                          title="YouTube"
+                        >
+                          <Youtube className="w-3.5 h-3.5" />
+                        </a>
+                      )}
+                      <a
+                        href={currentBio.social.spotify}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 rounded-full bg-white hover:bg-emerald-50 border border-[#D4AF37]/40 text-[#8B6508] hover:text-emerald-600 transition-all"
+                        title="Spotify"
+                      >
+                        <Radio className="w-3.5 h-3.5" />
+                      </a>
+                      {currentBio.social.facebook && (
+                        <a
+                          href={currentBio.social.facebook}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 rounded-full bg-white hover:bg-blue-50 border border-[#D4AF37]/40 text-[#8B6508] hover:text-blue-600 transition-all"
+                          title="Facebook"
+                        >
+                          <Facebook className="w-3.5 h-3.5" />
+                        </a>
+                      )}
+                      {currentBio.social.imdb && (
+                        <a
+                          href={currentBio.social.imdb}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 rounded-full bg-white hover:bg-amber-50 border border-[#D4AF37]/40 text-[#8B6508] hover:text-amber-800 transition-all"
+                          title="IMDb"
+                        >
+                          <Film className="w-3.5 h-3.5 text-amber-600" />
+                        </a>
+                      )}
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => handleOpenBio(currentBio.id)}
+                        className="px-4 py-2 rounded-xl bg-white hover:bg-[#FFF9E6] border border-[#D4AF37] text-xs font-bold text-[#8B6508] transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
+                      >
+                        <BookOpen className="w-3.5 h-3.5" />
+                        <span>Open Modal View</span>
+                      </button>
+
+                      {onOpenBooking && (
+                        <button
+                          onClick={onOpenBooking}
+                          className="px-4 py-2 rounded-xl bg-[#1A1A1A] hover:bg-[#D4AF37] text-[#FFF3B0] hover:text-[#1A1A1A] text-xs font-bold uppercase tracking-wider transition-all shadow-xs cursor-pointer"
+                        >
+                          Book {currentBio.name.split(' ')[0]} →
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         </div>
 
@@ -437,7 +796,7 @@ export const FeaturedArtistsSection: React.FC<FeaturedArtistsSectionProps> = ({ 
               className="text-xl sm:text-2xl font-bold font-serif"
               style={{ fontFamily: "'Cormorant Garamond', 'Georgia', serif" }}
             >
-              Bring Snehaa, Rram & The Live Band To Your City
+              Bring Rram, Sneha & The Live Band To Your City
             </h4>
             <p className="text-xs text-stone-300 max-w-xl">
               Now accepting promoter, venue, and private corporate festival inquiries for USA & Canada Tour dates.
@@ -455,6 +814,14 @@ export const FeaturedArtistsSection: React.FC<FeaturedArtistsSectionProps> = ({ 
           )}
         </div>
       </div>
+
+      {/* Artist Biography Detail Modal */}
+      <ArtistBioModal
+        isOpen={isBioModalOpen}
+        initialArtistId={bioModalArtist}
+        onClose={() => setIsBioModalOpen(false)}
+        onOpenBooking={onOpenBooking}
+      />
     </section>
   );
 };

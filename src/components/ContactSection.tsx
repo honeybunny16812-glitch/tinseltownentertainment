@@ -15,6 +15,12 @@ import {
   Crown,
   Navigation,
   Instagram,
+  Plane,
+  ShieldCheck,
+  ShoppingBag,
+  Award,
+  Star,
+  HeartHandshake,
 } from 'lucide-react';
 import { saveNewBooking } from '../utils/bookingStorage';
 
@@ -62,8 +68,10 @@ export const ContactSection: React.FC = () => {
       `Reference Code: ${generatedCode}`
     );
 
-    // Open user's email client automatically
-    window.location.href = `mailto:info@tinseltownentertainment.com?subject=${emailSubject}&body=${emailBody}`;
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=info@tinseltownentertainment.com&cc=faiz@baiginsurance.com&su=${emailSubject}&body=${emailBody}`;
+
+    // Open directly in Gmail (Web) so Outlook does NOT auto-launch
+    window.open(gmailUrl, '_blank', 'noopener,noreferrer');
 
     setIsSubmitted(true);
   };
@@ -88,7 +96,13 @@ export const ContactSection: React.FC = () => {
     `Hello Faiz Baig, My name is ${formData.name || 'a promoter/guest'}. I submitted a show booking inquiry for ${formData.city || 'my city'} on ${formData.eventDate || '2027 season'}.`
   )}`;
 
-  const emailDirectUrl = `mailto:info@tinseltownentertainment.com?subject=${encodeURIComponent(
+  const gmailDirectUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=info@tinseltownentertainment.com&cc=faiz@baiginsurance.com&su=${encodeURIComponent(
+    `Show Booking Inquiry - ${formData.city || 'Tour 2027'} - ${formData.name || 'Client'}`
+  )}&body=${encodeURIComponent(
+    `Name: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email}\nCity: ${formData.city}\nDate: ${formData.eventDate}\nMessage: ${formData.message}`
+  )}`;
+
+  const outlookDirectUrl = `mailto:info@tinseltownentertainment.com?cc=faiz@baiginsurance.com&subject=${encodeURIComponent(
     `Show Booking Inquiry - ${formData.city || 'Tour 2027'} - ${formData.name || 'Client'}`
   )}&body=${encodeURIComponent(
     `Name: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email}\nCity: ${formData.city}\nDate: ${formData.eventDate}\nMessage: ${formData.message}`
@@ -194,7 +208,7 @@ export const ContactSection: React.FC = () => {
               </div>
 
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8B6508] bg-[#D4AF37]/15 px-2.5 py-0.5 rounded-full">
-                Tour Promoter & Management
+                International Promoter & Management
               </span>
 
               <h3
@@ -264,7 +278,7 @@ export const ContactSection: React.FC = () => {
 
             <div className="pt-4 border-t border-[#D4AF37]/20 space-y-2.5">
               <a
-                href="mailto:info@tinseltownentertainment.com"
+                href="mailto:info@tinseltownentertainment.com?cc=faiz@baiginsurance.com"
                 className="flex items-center justify-between p-2.5 rounded-xl bg-white/90 border border-[#D4AF37]/30 hover:border-[#D4AF37] hover:bg-[#FFFDF8] transition-all group/link"
               >
                 <div className="flex items-center gap-1.5 overflow-hidden">
@@ -275,13 +289,24 @@ export const ContactSection: React.FC = () => {
                 </div>
               </a>
 
-              <a
-                href="mailto:info@tinseltownentertainment.com?subject=Book%20Shows%20In%20Our%20City%20Inquiry"
-                className="flex items-center justify-center gap-1.5 w-full py-2.5 px-3 rounded-xl bg-gold-btn text-[#1A1A1A] font-bold text-xs uppercase tracking-wider shadow-gold-sm hover:shadow-gold-lg transition-all duration-200"
-              >
-                <span>Send Mail Now</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </a>
+              <div className="grid grid-cols-2 gap-2">
+                <a
+                  href={`https://mail.google.com/mail/?view=cm&fs=1&to=info@tinseltownentertainment.com&cc=faiz@baiginsurance.com&su=${encodeURIComponent('Book Shows In Our City Inquiry')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-[11px] uppercase tracking-wider shadow-sm hover:shadow-md transition-all"
+                >
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>Via Gmail</span>
+                </a>
+                <a
+                  href="mailto:info@tinseltownentertainment.com?cc=faiz@baiginsurance.com&subject=Book%20Shows%20In%20Our%20City%20Inquiry"
+                  className="flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl bg-stone-800 hover:bg-black text-white font-bold text-[11px] uppercase tracking-wider shadow-sm hover:shadow-md transition-all"
+                >
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>Via Outlook</span>
+                </a>
+              </div>
             </div>
           </div>
 
@@ -398,32 +423,46 @@ export const ContactSection: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-                  <a
-                    href={emailDirectUrl}
-                    className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gold-btn text-[#1A1A1A] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-md"
-                  >
-                    <Mail className="w-4 h-4" />
-                    <span>Open in Email App</span>
-                  </a>
-                  <a
-                    href={babuWhatsAppUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-md"
-                  >
-                    <MessageCircle className="w-4 h-4" />
-                    <span>WhatsApp Babu Patel</span>
-                  </a>
-                  <a
-                    href={faizWhatsAppUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-md"
-                  >
-                    <MessageCircle className="w-4 h-4" />
-                    <span>WhatsApp Faiz Baig</span>
-                  </a>
+                <div className="space-y-3 pt-2">
+                  <div className="flex flex-wrap items-center justify-center gap-2.5">
+                    <a
+                      href={gmailDirectUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-md transition-all"
+                    >
+                      <Mail className="w-4 h-4" />
+                      <span>Open in Gmail (Web)</span>
+                    </a>
+                    <a
+                      href={outlookDirectUrl}
+                      className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-stone-800 hover:bg-black text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-md transition-all"
+                    >
+                      <Mail className="w-4 h-4" />
+                      <span>Open in Outlook / Mail</span>
+                    </a>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5">
+                    <a
+                      href={babuWhatsAppUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-md"
+                    >
+                      <MessageCircle className="w-4 h-4" />
+                      <span>WhatsApp Babu Patel</span>
+                    </a>
+                    <a
+                      href={faizWhatsAppUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-md"
+                    >
+                      <MessageCircle className="w-4 h-4" />
+                      <span>WhatsApp Faiz Baig</span>
+                    </a>
+                  </div>
                 </div>
 
                 <div className="pt-2">
@@ -656,6 +695,243 @@ export const ContactSection: React.FC = () => {
 
           </div>
 
+        </div>
+
+        {/* Official Event Sponsors & Community Partners (Elevated Prestige Pavilion) */}
+        <div
+          id="official-sponsors-partners"
+          className="mt-16 pt-10 border-t-2 border-[#D4AF37]/40 relative"
+        >
+          {/* Ornate Pavilion Container */}
+          <div className="rounded-3xl bg-gradient-to-b from-[#FFFDF9] via-[#FAF6ED] to-[#F5EEDB] border-2 border-[#D4AF37]/50 p-6 sm:p-9 lg:p-11 shadow-[0_10px_35px_rgba(212,175,55,0.14)] relative overflow-hidden">
+            {/* Subtle Royal Watermark / Background Accent */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4AF37]/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#B8860B]/5 rounded-full blur-3xl pointer-events-none" />
+
+            {/* Header / Title Block */}
+            <div className="text-center max-w-2xl mx-auto mb-10 space-y-2 relative z-10">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#8B6508] text-[10px] font-extrabold uppercase tracking-[0.25em]">
+                <Award className="w-3.5 h-3.5 text-[#D4AF37]" />
+                <span>Official Prestige Alliances</span>
+              </div>
+
+              <h4
+                className="text-2xl sm:text-3xl lg:text-4xl font-bold font-serif text-[#1A1A1A] tracking-tight leading-tight"
+                style={{ fontFamily: "'Cormorant Garamond', 'Georgia', serif" }}
+              >
+                Official Event Sponsors & Community Partners
+              </h4>
+
+              <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto my-2" />
+
+              <p className="text-xs sm:text-sm text-[#635544] max-w-lg mx-auto leading-relaxed">
+                With highest appreciation to our visionary corporate leaders and community pillars whose esteemed patronage powers grand cultural productions across North America.
+              </p>
+            </div>
+
+            {/* 4 Majestic Gold-Accented Sponsor Plaques */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 relative z-10">
+              {/* SoCal Aviation Inc */}
+              <div className="p-5 rounded-2xl bg-white/95 border-2 border-[#D4AF37]/45 hover:border-[#D4AF37] shadow-[0_4px_16px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30px_rgba(212,175,55,0.22)] transition-all duration-300 hover:-translate-y-1 group flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#D4AF37] via-[#F3E5AB] to-[#8B6508] p-0.5 shadow-sm group-hover:scale-105 transition-transform">
+                      <div className="w-full h-full rounded-[10px] bg-white flex items-center justify-center text-[#8B6508]">
+                        <Plane className="w-6 h-6 text-[#8B6508]" />
+                      </div>
+                    </div>
+                    <span className="text-[9px] uppercase font-extrabold tracking-widest text-[#8B6508] bg-[#D4AF37]/15 border border-[#D4AF37]/35 px-2.5 py-1 rounded-full">
+                      Aviation Sponsor
+                    </span>
+                  </div>
+
+                  <h5
+                    className="font-bold text-lg text-[#1A1A1A] font-serif group-hover:text-[#8B6508] transition-colors leading-snug"
+                    style={{ fontFamily: "'Cormorant Garamond', 'Georgia', serif" }}
+                  >
+                    SoCal Aviation Inc
+                  </h5>
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-[#8B6508] mt-0.5">
+                    Official Aerospace Partner
+                  </p>
+                  <p className="text-xs text-[#7A6B53] mt-2 leading-relaxed">
+                    Premier aviation solutions, private charter logistics & executive flight operations.
+                  </p>
+                </div>
+
+                <div className="pt-4 mt-4 border-t border-[#D4AF37]/25">
+                  <a
+                    href="tel:9099258036"
+                    className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#FFF9E6] to-[#FAF3DD] hover:from-[#D4AF37] hover:to-[#B8860B] border border-[#D4AF37]/50 text-[#1A1A1A] hover:text-white font-bold text-xs flex items-center justify-between transition-all duration-200 group-hover:shadow-sm cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Phone className="w-3.5 h-3.5 text-[#8B6508] group-hover:text-white transition-colors" />
+                      <span className="font-mono text-xs">909.925.8036</span>
+                    </div>
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider">
+                      Call Direct
+                    </span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Baig Insurance Agency */}
+              <div className="p-5 rounded-2xl bg-white/95 border-2 border-[#D4AF37]/45 hover:border-[#D4AF37] shadow-[0_4px_16px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30px_rgba(212,175,55,0.22)] transition-all duration-300 hover:-translate-y-1 group flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#D4AF37] via-[#F3E5AB] to-[#8B6508] p-0.5 shadow-sm group-hover:scale-105 transition-transform">
+                      <div className="w-full h-full rounded-[10px] bg-white flex items-center justify-center text-[#8B6508]">
+                        <ShieldCheck className="w-6 h-6 text-[#8B6508]" />
+                      </div>
+                    </div>
+                    <span className="text-[9px] uppercase font-extrabold tracking-widest text-[#8B6508] bg-[#D4AF37]/15 border border-[#D4AF37]/35 px-2.5 py-1 rounded-full">
+                      Official Sponsor
+                    </span>
+                  </div>
+
+                  <h5
+                    className="font-bold text-lg text-[#1A1A1A] font-serif group-hover:text-[#8B6508] transition-colors leading-snug"
+                    style={{ fontFamily: "'Cormorant Garamond', 'Georgia', serif" }}
+                  >
+                    Baig Insurance Agency
+                  </h5>
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-[#8B6508] mt-0.5">
+                    Commercial & Personal
+                  </p>
+                  <p className="text-xs text-[#7A6B53] mt-2 leading-relaxed">
+                    Trusted commercial liability, event protection, auto, home & family financial security.
+                  </p>
+                </div>
+
+                <div className="pt-4 mt-4 border-t border-[#D4AF37]/25">
+                  <a
+                    href="tel:5624031786"
+                    className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#FFF9E6] to-[#FAF3DD] hover:from-[#D4AF37] hover:to-[#B8860B] border border-[#D4AF37]/50 text-[#1A1A1A] hover:text-white font-bold text-xs flex items-center justify-between transition-all duration-200 group-hover:shadow-sm cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Phone className="w-3.5 h-3.5 text-[#8B6508] group-hover:text-white transition-colors" />
+                      <span className="font-mono text-xs">562.403.1786</span>
+                    </div>
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider">
+                      Call Direct
+                    </span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Ram Babu Products */}
+              <div className="p-5 rounded-2xl bg-white/95 border-2 border-[#D4AF37]/45 hover:border-[#D4AF37] shadow-[0_4px_16px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30px_rgba(212,175,55,0.22)] transition-all duration-300 hover:-translate-y-1 group flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#D4AF37] via-[#F3E5AB] to-[#8B6508] p-0.5 shadow-sm group-hover:scale-105 transition-transform">
+                      <div className="w-full h-full rounded-[10px] bg-white flex items-center justify-center text-[#8B6508]">
+                        <ShoppingBag className="w-6 h-6 text-[#8B6508]" />
+                      </div>
+                    </div>
+                    <span className="text-[9px] uppercase font-extrabold tracking-widest text-[#8B6508] bg-[#D4AF37]/15 border border-[#D4AF37]/35 px-2.5 py-1 rounded-full">
+                      Consumer Goods
+                    </span>
+                  </div>
+
+                  <h5
+                    className="font-bold text-lg text-[#1A1A1A] font-serif group-hover:text-[#8B6508] transition-colors leading-snug"
+                    style={{ fontFamily: "'Cormorant Garamond', 'Georgia', serif" }}
+                  >
+                    Ram Babu Products
+                  </h5>
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-[#8B6508] mt-0.5">
+                    Distribution & Trade
+                  </p>
+                  <p className="text-xs text-[#7A6B53] mt-2 leading-relaxed">
+                    High-standard consumer supplies, authentic specialty goods & nationwide retail distribution.
+                  </p>
+                </div>
+
+                <div className="pt-4 mt-4 border-t border-[#D4AF37]/25">
+                  <a
+                    href="tel:5625657512"
+                    className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#FFF9E6] to-[#FAF3DD] hover:from-[#D4AF37] hover:to-[#B8860B] border border-[#D4AF37]/50 text-[#1A1A1A] hover:text-white font-bold text-xs flex items-center justify-between transition-all duration-200 group-hover:shadow-sm cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Phone className="w-3.5 h-3.5 text-[#8B6508] group-hover:text-white transition-colors" />
+                      <span className="font-mono text-xs">562.565.7512</span>
+                    </div>
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider">
+                      Call Direct
+                    </span>
+                  </a>
+                </div>
+              </div>
+
+              {/* U-Insurance & Financial Services */}
+              <div className="p-5 rounded-2xl bg-white/95 border-2 border-[#D4AF37]/45 hover:border-[#D4AF37] shadow-[0_4px_16px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30px_rgba(212,175,55,0.22)] transition-all duration-300 hover:-translate-y-1 group flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#D4AF37] via-[#F3E5AB] to-[#8B6508] p-0.5 shadow-sm group-hover:scale-105 transition-transform">
+                      <div className="w-full h-full rounded-[10px] bg-white flex items-center justify-center text-[#8B6508]">
+                        <Building2 className="w-6 h-6 text-[#8B6508]" />
+                      </div>
+                    </div>
+                    <span className="text-[9px] uppercase font-extrabold tracking-widest text-[#8B6508] bg-[#D4AF37]/15 border border-[#D4AF37]/35 px-2.5 py-1 rounded-full">
+                      Executive Sponsor
+                    </span>
+                  </div>
+
+                  <h5
+                    className="font-bold text-lg text-[#1A1A1A] font-serif group-hover:text-[#8B6508] transition-colors leading-snug"
+                    style={{ fontFamily: "'Cormorant Garamond', 'Georgia', serif" }}
+                  >
+                    U-Insurance & Financial Services
+                  </h5>
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-[#8B6508] mt-0.5">
+                    Commercial & Personal
+                  </p>
+                  <p className="text-xs text-[#7A6B53] mt-2 leading-relaxed">
+                    Comprehensive commercial liability & personal coverage, business risk packages, auto, home & family financial security.
+                  </p>
+                </div>
+
+                <div className="pt-4 mt-4 border-t border-[#D4AF37]/25">
+                  <a
+                    href="tel:3467581901"
+                    className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#FFF9E6] to-[#FAF3DD] hover:from-[#D4AF37] hover:to-[#B8860B] border border-[#D4AF37]/50 text-[#1A1A1A] hover:text-white font-bold text-xs flex items-center justify-between transition-all duration-200 group-hover:shadow-sm cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Phone className="w-3.5 h-3.5 text-[#8B6508] group-hover:text-white transition-colors" />
+                      <span className="font-mono text-xs">346.758.1901</span>
+                    </div>
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider">
+                      Call Direct
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Partnership Invitation Ribbon */}
+            <div className="mt-8 pt-6 border-t border-[#D4AF37]/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left relative z-10">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[#D4AF37]/20 flex items-center justify-center text-[#8B6508] shrink-0">
+                  <HeartHandshake className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-[#1A1A1A]">
+                    Join as an Official Corporate Sponsor or Community Partner
+                  </p>
+                  <p className="text-[11px] text-[#7A6B53]">
+                    Inquire for North America Arena Tour 2027 brand placement, VIP boxes & gala tables.
+                  </p>
+                </div>
+              </div>
+
+              <a
+                href="#contact-form"
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#B8860B] text-[#1A1A1A] text-xs font-extrabold uppercase tracking-wider shadow-sm hover:shadow-gold transition-all duration-200 shrink-0 cursor-pointer"
+              >
+                Inquire for Sponsorship
+              </a>
+            </div>
+          </div>
         </div>
 
       </div>

@@ -7,12 +7,12 @@ import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { TourDatesMarquee } from './components/TourDatesMarquee';
-import { DiwaliGalaEvent } from './components/DiwaliGalaEvent';
 import { BollywoodMilestonesEvent } from './components/BollywoodMilestonesEvent';
 import { FeaturedArtistsSection } from './components/FeaturedArtistsSection';
 import { GallerySection } from './components/GallerySection';
 import { ContactSection } from './components/ContactSection';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
+import { UpcomingEventSidebar } from './components/UpcomingEventSidebar';
 import { MouseVisualTrail } from './components/MouseVisualTrail';
 import { BookingModal } from './components/BookingModal';
 import { TourExploreModal } from './components/TourExploreModal';
@@ -52,9 +52,6 @@ export default function App() {
         {/* Dynamic Tour Dates Marquee */}
         <TourDatesMarquee onSelectCity={(cityId) => handleOpenBooking(cityId)} />
 
-        {/* Upcoming Event — IASA DIWALI GALA (Nov 15, Upland, CA) */}
-        <DiwaliGalaEvent />
-
         {/* Upcoming Event — BOLLYWOOD MILESTONES Official Tour 2027 */}
         <BollywoodMilestonesEvent onBookShow={() => handleOpenBooking()} />
 
@@ -67,6 +64,9 @@ export default function App() {
         {/* Premium White & Gold Contact Section */}
         <ContactSection />
       </main>
+
+      {/* Persistent Side Dock: Upcoming Event — USA & Canada Tour 2027 */}
+      <UpcomingEventSidebar onOpenBooking={() => handleOpenBooking()} />
 
       {/* Floating Instant WhatsApp Button with Luxury Music Icon */}
       <FloatingWhatsApp />
@@ -113,19 +113,28 @@ export default function App() {
             </div>
           </div>
 
-          <div className="border-t border-[#D4AF37]/20 pt-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-[#795503]">
-            <div className="flex items-center gap-2">
+          <div className="border-t border-[#D4AF37]/20 pt-5 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#795503]">
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 text-center md:text-left">
               <span className="w-1.5 h-1.5 bg-[#D4AF37] rotate-45 inline-block" />
               <span className="font-bold uppercase tracking-wider text-[#1A1A1A]">
                 Tinsel Town Entertainment Inc.
               </span>
-            </div>
-
-            <div className="flex items-center gap-3">
+              <span className="hidden sm:inline text-stone-300">|</span>
               <span className="text-stone-500 font-medium">Official USA & Canada Tour Management</span>
             </div>
 
-            <span>© 2027 All Rights Reserved.</span>
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 text-[11px]">
+              <span className="text-stone-600">© 2027 All Rights Reserved.</span>
+              <span className="hidden sm:inline text-stone-300">•</span>
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#FFFDF8] border border-[#D4AF37]/60 text-[#1A1A1A] shadow-xs">
+                <span className="text-[10px] uppercase font-bold tracking-wider text-[#8B6508]">
+                  Developed by
+                </span>
+                <span className="font-extrabold text-[#1A1A1A] tracking-wide">
+                  UBS Solutions
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </footer>

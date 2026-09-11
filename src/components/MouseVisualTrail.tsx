@@ -37,36 +37,38 @@ export const MouseVisualTrail: React.FC = () => {
     const noteCharacters = ['♪', '♫', '♬', '✨', '𝄞', '♩', '✦'];
     const colors = ['#D4AF37', '#FFF3B0', '#F3E5AB', '#E6C87A', '#AA771C', '#FFD700'];
 
+    let lastSpawnTime = 0;
+
     const handleMouseMove = (e: MouseEvent) => {
+      const now = performance.now();
       const x = e.clientX;
       const y = e.clientY;
 
       const dx = x - lastPosRef.current.x;
       const dy = y - lastPosRef.current.y;
-      const speed = Math.sqrt(dx * dx + dy * dy);
+      const dist = Math.sqrt(dx * dx + dy * dy);
 
       lastPosRef.current = { x, y };
 
-      if (speed > 2) {
-        // Spawn glowing golden music notes & stardust trails (Silent visual effect)
-        const count = Math.min(Math.floor(speed / 7) + 1, 4);
-        for (let i = 0; i < count; i++) {
-          const isNote = Math.random() > 0.4;
-          particlesRef.current.push({
-            x: x + (Math.random() - 0.5) * 12,
-            y: y + (Math.random() - 0.5) * 12,
-            vx: (Math.random() - 0.5) * 1.8 - (dx * 0.12),
-            vy: (Math.random() - 0.5) * 1.8 - 1.4 - (dy * 0.12),
-            size: isNote ? Math.random() * 12 + 11 : Math.random() * 3.5 + 1.5,
-            opacity: 1,
-            color: colors[Math.floor(Math.random() * colors.length)],
-            char: isNote ? noteCharacters[Math.floor(Math.random() * noteCharacters.length)] : undefined,
-            rotation: Math.random() * Math.PI * 2,
-            vRot: (Math.random() - 0.5) * 0.08,
-            life: 0,
-            maxLife: Math.random() * 25 + 30,
-          });
-        }
+      // Throttle: spawn at most one delicate subtle particle every 60ms and only on meaningful movement
+      if (dist > 8 && now - lastSpawnTime > 60) {
+        lastSpawnTime = now;
+        const isNote = Math.random() > 0.6; // mostly tiny sparkles, occasional note
+
+        particlesRef.current.push({
+          x: x + (Math.random() - 0.5) * 6,
+          y: y + (Math.random() - 0.5) * 6,
+          vx: (Math.random() - 0.5) * 0.8 - (dx * 0.04),
+          vy: -0.6 - Math.random() * 0.5,
+          size: isNote ? Math.random() * 4 + 8 : Math.random() * 2 + 1.2,
+          opacity: 0.5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          char: isNote ? noteCharacters[Math.floor(Math.random() * noteCharacters.length)] : undefined,
+          rotation: (Math.random() - 0.5) * 0.5,
+          vRot: (Math.random() - 0.5) * 0.04,
+          life: 0,
+          maxLife: Math.random() * 10 + 20, // gently fades out quickly
+        });
       }
     };
 
@@ -74,23 +76,23 @@ export const MouseVisualTrail: React.FC = () => {
       const x = e.clientX;
       const y = e.clientY;
 
-      // Burst of floating notes & sparkles on click
-      for (let i = 0; i < 14; i++) {
-        const angle = (Math.PI * 2 * i) / 14;
-        const velocity = Math.random() * 3 + 2;
+      // Small, elegant burst of 4 soft sparkles on click
+      for (let i = 0; i < 4; i++) {
+        const angle = (Math.PI * 2 * i) / 4 + Math.random() * 0.5;
+        const velocity = Math.random() * 1.5 + 1;
         particlesRef.current.push({
           x,
           y,
           vx: Math.cos(angle) * velocity,
           vy: Math.sin(angle) * velocity,
-          size: Math.random() > 0.4 ? Math.random() * 14 + 11 : Math.random() * 4 + 2,
-          opacity: 1,
+          size: Math.random() > 0.5 ? 9 : 2,
+          opacity: 0.55,
           color: colors[Math.floor(Math.random() * colors.length)],
-          char: Math.random() > 0.35 ? noteCharacters[Math.floor(Math.random() * noteCharacters.length)] : undefined,
-          rotation: Math.random() * Math.PI * 2,
-          vRot: (Math.random() - 0.5) * 0.15,
+          char: Math.random() > 0.5 ? '✨' : undefined,
+          rotation: Math.random() * Math.PI,
+          vRot: (Math.random() - 0.5) * 0.08,
           life: 0,
-          maxLife: 42,
+          maxLife: 22,
         });
       }
     };
@@ -127,22 +129,22 @@ export const MouseVisualTrail: React.FC = () => {
           ctx.font = `bold ${p.size}px serif`;
           ctx.fillStyle = p.color;
           ctx.shadowColor = '#D4AF37';
-          ctx.shadowBlur = 8;
+          ctx.shadowBlur = 4;
           ctx.fillText(p.char, -p.size / 2, p.size / 2);
         } else {
           ctx.beginPath();
           ctx.arc(0, 0, p.size, 0, Math.PI * 2);
           ctx.fillStyle = p.color;
           ctx.shadowColor = '#FFF3B0';
-          ctx.shadowBlur = 6;
+          ctx.shadowBlur = 3;
           ctx.fill();
         }
 
         ctx.restore();
       }
 
-      if (particles.length > 90) {
-        particlesRef.current = particles.slice(particles.length - 90);
+      if (particles.length > 25) {
+        particlesRef.current = particles.slice(particles.length - 25);
       }
 
       animId = requestAnimationFrame(render);

@@ -66,7 +66,7 @@ export const getSavedBookings = (): BookingRecord[] => {
           ticketCount: 1,
           reservationCode: 'TT-CITY-2027-109283',
           source: 'contact_form',
-          notes: 'Interested in co-promoting Snehaa & Rram concert in USA',
+          notes: 'Interested in co-promoting Rram & Sneha concert in USA',
           status: 'pending',
         },
       ];

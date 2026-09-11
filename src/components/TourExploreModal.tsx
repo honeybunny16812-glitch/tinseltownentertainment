@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { X, Sparkles, Music, Star, Disc3, Award, Calendar, Compass, ArrowRight } from 'lucide-react';
+import snehaaImg from '../assets/images/sneha02110.jpg';
+import rramImg from '../assets/images/Rram01002.png';
 
 interface TourExploreModalProps {
   isOpen: boolean;
@@ -177,6 +179,47 @@ export const TourExploreModal: React.FC<TourExploreModalProps> = ({
                     </div>
                   );
                 })}
+              </div>
+
+              {/* Lead Headline Vocalists Showcase */}
+              <div className="p-4 rounded-2xl bg-[#FFF9E6] border border-[#D4AF37]/50 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
+                <div className="flex items-center gap-3">
+                  <div className="flex -space-x-2 shrink-0">
+                    <img
+                      src={rramImg}
+                      alt="Rram Tasildar"
+                      referrerPolicy="no-referrer"
+                      className="w-10 h-10 rounded-full object-cover border-2 border-[#D4AF37] shadow-xs z-10"
+                    />
+                    <img
+                      src={snehaaImg}
+                      alt="Sneha Bhattacharya"
+                      referrerPolicy="no-referrer"
+                      className="w-10 h-10 rounded-full object-cover object-[center_20%] border-2 border-[#D4AF37] shadow-xs"
+                    />
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-[#8B6508] block leading-none mb-0.5">
+                      Tour Lead Vocalists
+                    </span>
+                    <h5 className="text-xs font-bold text-[#1A1A1A]">
+                      Rram Tasildar & Sneha Bhattacharya
+                    </h5>
+                    <p className="text-[10px] text-stone-600">
+                      Music Director & Bollywood Artist | Sa Re Ga Ma Pa Finalist
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    onClose();
+                    const el = document.getElementById('featured-artists-section');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="text-xs font-bold text-[#8B6508] hover:underline cursor-pointer whitespace-nowrap"
+                >
+                  View Artist Profiles →
+                </button>
               </div>
             </div>
           )}

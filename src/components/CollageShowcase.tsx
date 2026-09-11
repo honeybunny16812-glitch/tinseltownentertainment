@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Sparkles, Mic, Music, Radio, Star } from 'lucide-react';
-import femaleSingerImg from '../assets/images/female_singer_gold_1787689575516.jpg';
-import maleSingerImg from '../assets/images/male_singer_gold_1787689587815.jpg';
+import snehaaImg from '../assets/images/sneha02110.jpg';
+import rramTasildarImg from '../assets/images/Rram01002.png';
 import concertFireworksImg from '../assets/images/concert_fireworks_gold_1787689601656.jpg';
 import goldInstrumentsImg from '../assets/images/gold_instruments_lights_1787689616854.jpg';
 
@@ -37,10 +37,10 @@ export const CollageShowcase: React.FC = () => {
           }`}
         >
           <img
-            src={femaleSingerImg}
-            alt="Female Bollywood Singer Performing Live"
+            src={snehaaImg}
+            alt="Snehaa Bhattacharya Bollywood Playback Singer Live"
             referrerPolicy="no-referrer"
-            className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+            className="w-full h-full object-cover object-[center_20%] transition-transform duration-700 hover:scale-105"
           />
           {/* Artistic Gold Lighting Overlays */}
           <div className="absolute inset-0 bg-gradient-to-b from-[#D4AF3733] via-transparent to-black/80 pointer-events-none" />
@@ -48,21 +48,25 @@ export const CollageShowcase: React.FC = () => {
 
           {/* Top Floating Badge */}
           <div className="absolute top-8 left-1/2 -translate-x-1/2 px-3 py-1 bg-black/40 backdrop-blur-md rounded-full border border-white/30 text-white flex items-center gap-1.5 shadow-sm">
-            <Radio className="w-2.5 h-2.5 text-[#E6C87A] animate-pulse" />
-            <span className="text-[9px] uppercase tracking-widest font-semibold">
-              Live Symphony
+            <Sparkles className="w-2.5 h-2.5 text-[#E6C87A] animate-pulse" />
+            <span className="text-[9px] uppercase tracking-widest font-semibold whitespace-nowrap">
+              Sa Re Ga Ma Finalist
             </span>
           </div>
 
           <div className="absolute bottom-8 left-6 sm:left-8 right-6 text-white text-left">
-            <p className="text-[9px] uppercase tracking-widest text-[#E6C87A] opacity-90 font-bold">
-              Live Performance
+            <div className="h-[2px] w-12 bg-[#D4AF37] mb-2" />
+            <p className="text-[9px] uppercase tracking-[0.25em] font-bold text-[#E6C87A] mb-0.5">
+              Bollywood Playback Singer
             </p>
-            <p
-              className="text-xl sm:text-2xl italic font-serif leading-tight drop-shadow-md text-white"
-              style={{ fontFamily: "'Cormorant Garamond', 'Georgia', serif" }}
+            <h3
+              className="text-xl sm:text-2xl font-serif italic text-white"
+              style={{ fontFamily: "'Cinzel', 'Playfair Display', serif" }}
             >
-              Legendary Divas
+              Snehaa Bhattacharya
+            </h3>
+            <p className="text-[10px] mt-1 text-white/80 leading-tight">
+              Soulful melodies & evergreen Bollywood hits live on tour.
             </p>
           </div>
         </div>
@@ -79,8 +83,8 @@ export const CollageShowcase: React.FC = () => {
           }`}
         >
           <img
-            src={maleSingerImg}
-            alt="Male Bollywood Singer Performing Live"
+            src={rramTasildarImg}
+            alt="Rram Tasildar Bollywood Singer & Guitarist Live"
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
           />
@@ -96,16 +100,16 @@ export const CollageShowcase: React.FC = () => {
           <div className="absolute bottom-8 left-6 sm:left-8 right-6 text-white text-left">
             <div className="h-[2px] w-12 bg-[#D4AF37] mb-2" />
             <p className="text-[9px] uppercase tracking-[0.25em] font-bold text-[#E6C87A] mb-0.5">
-              Special Event
+              Music Director & Playback Singer
             </p>
             <h3
               className="text-xl sm:text-2xl font-serif italic text-white"
               style={{ fontFamily: "'Cormorant Garamond', 'Georgia', serif" }}
             >
-              Maestros Live
+              Rram Tasildar
             </h3>
             <p className="text-[10px] mt-1 text-white/80 leading-tight">
-              A night of soulful melodies and orchestral brilliance.
+              Hit tracks "Muntazir", "Ishq", "Dil" & "Mon Bechara" live on tour.
             </p>
           </div>
         </div>

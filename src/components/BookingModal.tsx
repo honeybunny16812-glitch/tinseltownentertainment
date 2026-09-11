@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Check, Calendar, MapPin, Sparkles, ShieldCheck, Ticket, Download, ArrowRight, Phone, MessageCircle } from 'lucide-react';
+import { X, Check, Calendar, MapPin, Sparkles, ShieldCheck, Ticket, Download, ArrowRight, Phone, MessageCircle, Mail } from 'lucide-react';
 import { TourCity, VIPTier } from '../types';
 import { saveNewBooking } from '../utils/bookingStorage';
 
@@ -131,6 +131,10 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   const [guestEmail, setGuestEmail] = useState<string>('');
   const [guestPhone, setGuestPhone] = useState<string>('');
   const [reservationCode, setReservationCode] = useState<string>('');
+  const [emailLinks, setEmailLinks] = useState<{ gmail: string; outlook: string }>({
+    gmail: '',
+    outlook: '',
+  });
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   if (!isOpen) return null;
@@ -172,8 +176,13 @@ export const BookingModal: React.FC<BookingModalProps> = ({
       `• Status: Priority Reservation Request\n`
     );
 
-    // Trigger email client directly to official inbox
-    window.location.href = `mailto:info@tinseltownentertainment.com?subject=${emailSubject}&body=${emailBody}`;
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=info@tinseltownentertainment.com&cc=faiz@baiginsurance.com&su=${emailSubject}&body=${emailBody}`;
+    const outlookUrl = `mailto:info@tinseltownentertainment.com?cc=faiz@baiginsurance.com&subject=${emailSubject}&body=${emailBody}`;
+
+    setEmailLinks({ gmail: gmailUrl, outlook: outlookUrl });
+
+    // Open Gmail directly in browser (does NOT launch Outlook!)
+    window.open(gmailUrl, '_blank', 'noopener,noreferrer');
 
     setIsSuccess(true);
   };
@@ -451,37 +460,63 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 pt-2">
-              <a
-                href={`https://wa.me/15628601135?text=${encodeURIComponent(
-                  `Hello Babu Patel, I have confirmed my Pre-Seat Reservation on your website!\n\nCode: ${reservationCode}\nName: ${guestName}\nCity: ${currentCityObj.city} (${currentCityObj.venue})\nTier: ${currentTierObj.name} (${ticketCount} passes)\nEmail: ${guestEmail}`
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md transition-all"
-              >
-                <MessageCircle className="w-4 h-4" />
-                <span>WhatsApp Babu Patel</span>
-              </a>
+            {/* Actions: Direct Gmail, Outlook & WhatsApp Dispatch */}
+            <div className="space-y-3 pt-2">
+              <div className="flex flex-wrap items-center justify-center gap-2.5">
+                {emailLinks.gmail && (
+                  <a
+                    href={emailLinks.gmail}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-md transition-all"
+                  >
+                    <Mail className="w-4 h-4" />
+                    <span>Open in Gmail (Web)</span>
+                  </a>
+                )}
+                {emailLinks.outlook && (
+                  <a
+                    href={emailLinks.outlook}
+                    className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-stone-800 hover:bg-black text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-md transition-all"
+                  >
+                    <Mail className="w-4 h-4" />
+                    <span>Open in Outlook / Mail</span>
+                  </a>
+                )}
+              </div>
 
-              <a
-                href={`https://wa.me/19094356603?text=${encodeURIComponent(
-                  `Hello Faiz Baig, I have confirmed my Pre-Seat Reservation on your website!\n\nCode: ${reservationCode}\nName: ${guestName}\nCity: ${currentCityObj.city} (${currentCityObj.venue})\nTier: ${currentTierObj.name} (${ticketCount} passes)\nEmail: ${guestEmail}`
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md transition-all"
-              >
-                <MessageCircle className="w-4 h-4" />
-                <span>WhatsApp Faiz Baig</span>
-              </a>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5">
+                <a
+                  href={`https://wa.me/15628601135?text=${encodeURIComponent(
+                    `Hello Babu Patel, I have confirmed my Pre-Seat Reservation on your website!\n\nCode: ${reservationCode}\nName: ${guestName}\nCity: ${currentCityObj.city} (${currentCityObj.venue})\nTier: ${currentTierObj.name} (${ticketCount} passes)\nEmail: ${guestEmail}`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md transition-all"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>WhatsApp Babu Patel</span>
+                </a>
 
-              <button
-                onClick={handleReset}
-                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#1A1A1A] text-white hover:bg-[#D4AF37] hover:text-[#1A1A1A] font-semibold text-xs tracking-wider uppercase transition-colors cursor-pointer"
-              >
-                Done
-              </button>
+                <a
+                  href={`https://wa.me/19094356603?text=${encodeURIComponent(
+                    `Hello Faiz Baig, I have confirmed my Pre-Seat Reservation on your website!\n\nCode: ${reservationCode}\nName: ${guestName}\nCity: ${currentCityObj.city} (${currentCityObj.venue})\nTier: ${currentTierObj.name} (${ticketCount} passes)\nEmail: ${guestEmail}`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-md transition-all"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>WhatsApp Faiz Baig</span>
+                </a>
+
+                <button
+                  onClick={handleReset}
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#1A1A1A] text-white hover:bg-[#D4AF37] hover:text-[#1A1A1A] font-semibold text-xs tracking-wider uppercase transition-colors cursor-pointer"
+                >
+                  Done
+                </button>
+              </div>
             </div>
           </div>
         )}

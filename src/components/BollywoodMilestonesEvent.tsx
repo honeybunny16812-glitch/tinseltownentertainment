@@ -14,7 +14,9 @@ import {
   Award,
   Globe2,
 } from 'lucide-react';
-import bannerImg from '../assets/images/bollywood_milestones_banner_1787694837604.jpg';
+import bannerImg from '../assets/images/bollywood_grand_premiere_1788967886009.jpg';
+import rramImg from '../assets/images/Rram01002.png';
+import snehaaImg from '../assets/images/sneha02110.jpg';
 
 interface BollywoodMilestonesEventProps {
   onBookShow: () => void;
@@ -181,6 +183,37 @@ export const BollywoodMilestonesEvent: React.FC<BollywoodMilestonesEventProps> =
                     <span>
                       <strong className="text-white">Live Ensemble:</strong> Full Bollywood Band
                     </span>
+                  </div>
+                </div>
+
+                {/* Headline Featured Artists Showcase */}
+                <div className="pt-3 border-t border-white/10 flex flex-wrap items-center gap-4">
+                  <span className="text-[10px] uppercase font-bold tracking-widest text-[#D4AF37]">
+                    Headline Singers:
+                  </span>
+                  <div className="flex items-center gap-2 bg-black/40 px-3 py-1.5 rounded-full border border-[#D4AF37]/50 shadow-xs">
+                    <img
+                      src={rramImg}
+                      alt="Rram Tasildar"
+                      referrerPolicy="no-referrer"
+                      className="w-7 h-7 rounded-full object-cover border border-[#D4AF37]"
+                    />
+                    <div>
+                      <span className="text-xs font-bold text-white block leading-none">Rram Tasildar</span>
+                      <span className="text-[9px] text-[#FFD54F]">Vocalist & Guitar</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 bg-black/40 px-3 py-1.5 rounded-full border border-[#D4AF37]/50 shadow-xs">
+                    <img
+                      src={snehaaImg}
+                      alt="Snehaa Bhattacharya"
+                      referrerPolicy="no-referrer"
+                      className="w-7 h-7 rounded-full object-cover object-[center_20%] border border-[#D4AF37]"
+                    />
+                    <div>
+                      <span className="text-xs font-bold text-white block leading-none">Snehaa Bhattacharya</span>
+                      <span className="text-[9px] text-[#FFD54F]">Playback Singer</span>
+                    </div>
                   </div>
                 </div>
               </div>

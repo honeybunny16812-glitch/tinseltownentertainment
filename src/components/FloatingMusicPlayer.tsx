@@ -57,7 +57,7 @@ const TRACKS: Track[] = [
   {
     id: 'arena_celebration',
     title: '90s & Modern Bollywood Live Mashup',
-    artist: 'Snehaa, Rram & The Rhythm Section',
+    artist: 'Rram, Sneha & The Rhythm Section',
     era: 'Concert Finale',
     tempo: 102,
     scale: [293.66, 329.63, 369.99, 440.0, 493.88, 587.33], // D Major / Bilawal
